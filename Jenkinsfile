@@ -43,14 +43,14 @@ pipeline {
         milestone(1)
         withCredentials ([usernamePassword(credentialsId: 'prod server cloud_user', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
             script {
-                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo -t docker pull justo123/train-schedule:${env.BUILD_NUMBER}\""
+                sh "sshpass -t -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo docker pull justo123/train-schedule:${env.BUILD_NUMBER}\""
                 try {
-                   sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo -t docker stop train-schedule\""
-                   sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo -t docker rm train-schedule\""
+                   sh "sshpass -t -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo docker stop train-schedule\""
+                   sh "sshpass -t -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo docker rm train-schedule\""
                 } catch (err) {
                     echo: 'caught error: $err'
                 }
-                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo -t docker run --restart always --name train-schedule -p 8080:8080 -d justo123/train-schedule:${env.BUILD_NUMBER}\""
+                sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"sudo docker run --restart always --name train-schedule -p 8080:8080 -d justo123/train-schedule:${env.BUILD_NUMBER}\""
             }
         }
     }
