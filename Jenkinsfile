@@ -1,6 +1,6 @@
 pipeline {
 	agent any
-    	steps {
+    	stages {
         	step('Build') {
             	sh "./gradlew build --no-daemon"
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip', fingerprint: true
