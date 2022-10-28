@@ -1,8 +1,11 @@
 pipeline {
+	agent any
 	stages {
-    	stage('Build') {
-        sh './gradlew build'
-        sh './gradlew npm_start'
-        }
+		stage('Build') {
+			steps{
+				sh './gradlew build'
+				sh './gradlew npm_start'
+			}
+		}
     }
 }
