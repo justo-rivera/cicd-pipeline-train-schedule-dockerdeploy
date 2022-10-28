@@ -7,5 +7,10 @@ pipeline {
 				sh './gradlew npm_start'
 			}
 		}
-    }
+    	}
+	post {
+		always {
+			archiveArtifacts artifacts: 'dist/trainSchedule.zip', fingerprint: true
+		}
+	}
 }
