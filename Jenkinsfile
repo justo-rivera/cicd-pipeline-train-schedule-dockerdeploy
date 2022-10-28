@@ -3,8 +3,7 @@ pipeline {
 	stages {
 		stage('Build') {
 			steps{
-				sh './gradlew build'
-				sh './gradlew npm_start'
+				sh './gradlew build --no-daemon'
 			}
 		}
     	}
