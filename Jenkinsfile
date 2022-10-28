@@ -10,7 +10,7 @@ pipeline {
             stage('Deploy') {
 	    	steps{
             	sh "sshpass -p jenkins -v ssh -tt -o StrictHostKeyChecking=no deploy@44.204.4.25 'sudo systemctl stop train-schedule'"
-                sh "sshpass -p jenkins -v scp -tt -o StrictHostKeyChecking=no dist/trainSchedule.zip deploy@44.204.4.25:/opt/train-schedule/trainSchedule.zip"
+                sh "sshpass -p jenkins -v scp -o StrictHostKeyChecking=no dist/trainSchedule.zip deploy@44.204.4.25:/opt/train-schedule/trainSchedule.zip"
             	sh "sshpass -p jenkins -v ssh -tt -o StrictHostKeyChecking=no deploy@44.204.4.25 'sudo unzip -o /opt/train-schedule/trainSchedule.zip'"
             	sh "sshpass -p jenkins -v ssh -tt -o StrictHostKeyChecking=no deploy@44.204.4.25 'sudo systemctl start train-schedule'"
 		}
